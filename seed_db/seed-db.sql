@@ -81,6 +81,13 @@ VALUES
 ('Get student detail', '/api/v1/students/:id', NULL, 'students_parent', NULL, 'api', 'GET'),
 ('Handle student status', '/api/v1/students/:id/status', NULL, 'students_parent', NULL, 'api', 'POST'),
 ('Update student detail', '/api/v1/students/:id', NULL, 'students_parent', NULL, 'api', 'PUT'),
+('Certificates', 'certificates', NULL, 'students_parent', 3, 'menu-screen', NULL),
+('Upload certificate metadata', '/api/v1/certificates/ipfs', NULL, 'students_parent', NULL, 'api', 'POST'),
+('Get certificate metadata', '/api/v1/certificates/ipfs/:cid', NULL, 'students_parent', NULL, 'api', 'GET'),
+('Record certificate', '/api/v1/certificates', NULL, 'students_parent', NULL, 'api', 'POST'),
+('Get certificate', '/api/v1/certificates/:id', NULL, 'students_parent', NULL, 'api', 'GET'),
+('Get student certificates', '/api/v1/certificates/student/:studentId', NULL, 'students_parent', NULL, 'api', 'GET'),
+('Verify certificate', '/api/v1/certificates/verify/:certificateId', NULL, 'students_parent', NULL, 'api', 'GET'),
 -- end student
 
 -- start communication

@@ -839,3 +839,19 @@ BEGIN
     ORDER BY t1.created_dt DESC;
 END;
 $BODY$;
+
+CREATE TABLE certificates(
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER NOT NULL REFERENCES users(id),
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    achievement_date DATE,
+    ipfs_cid VARCHAR(128) NOT NULL,
+    content_hash VARCHAR(128) NOT NULL,
+    on_chain_id VARCHAR(128),
+    tx_hash VARCHAR(128),
+    issuer_address VARCHAR(64),
+    issued_by INTEGER REFERENCES users(id),
+    revoked BOOLEAN DEFAULT FALSE,
+    created_dt TIMESTAMP DEFAULT NOW()
+);

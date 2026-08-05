@@ -9,8 +9,10 @@ skill-test/
 ├── frontend/           # React + TypeScript + Material-UI
 ├── backend/            # Node.js + Express + PostgreSQL
 ├── go-service/         # Golang microservice for PDF reports
-├── seed_db/           # Database schema and seed data
-└── README.md          # This file
+├── contracts/          # Solidity certificate registry (Hardhat)
+├── seed_db/            # Database schema and seed data
+├── docker-compose.yml  # Full-stack container orchestration
+└── README.md           # This file
 ```
 
 ## 🚀 Quick Start
@@ -41,6 +43,31 @@ npm run dev
 - **Demo Credentials**: 
   - Email: `admin@school-admin.com`
   - Password: `3OU4zn3q6Zh9`
+
+### Docker (Problem 5)
+```bash
+docker compose up --build
+```
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5007
+- Go PDF service: http://localhost:8080
+
+### Go PDF Service (Problem 4)
+```bash
+cd go-service
+go mod tidy
+go run .
+curl -OJ http://localhost:8080/api/v1/students/1/report
+```
+
+### Blockchain Certificates (Problem 3)
+```bash
+cd contracts
+npm install
+npx hardhat node   # terminal 1
+npx hardhat run scripts/deploy.js --network localhost  # terminal 2
+# set VITE_CERTIFICATE_CONTRACT_ADDRESS in frontend/.env
+```
 
 ### ** Database Setup **
 ```bash

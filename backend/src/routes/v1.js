@@ -16,6 +16,7 @@ const { sectionRoutes } = require("../modules/sections/section-router.js");
 const { departmentRoutes } = require("../modules/departments/department-router.js");
 const { handleGetDashboardData } = require("../modules/dashboard/dashboard-controller.js");
 const { accessControlRoutes } = require("../modules/access-control/access-control-router.js");
+const { certificatesRoutes } = require("../modules/certificates/certificates-router.js");
 
 router.get("/teachers", authenticateToken, csrfProtection, checkApiAccess, handleGetAllTeachers);
 router.get("/dashboard", authenticateToken, csrfProtection, checkApiAccess, handleGetDashboardData);
@@ -27,6 +28,7 @@ router.use("/classes", authenticateToken, csrfProtection, classesRoutes);
 router.use("/class-teachers", authenticateToken, csrfProtection, classTeacherRoutes);
 router.use("/sections", authenticateToken, csrfProtection, sectionRoutes);
 router.use("/students", authenticateToken, csrfProtection, studentsRoutes);
+router.use("/certificates", authenticateToken, csrfProtection, certificatesRoutes);
 router.use("/notices", authenticateToken, csrfProtection, noticesRoutes);
 router.use("/staffs", authenticateToken, csrfProtection, staffsRoutes);
 router.use("/departments", authenticateToken, csrfProtection, departmentRoutes);

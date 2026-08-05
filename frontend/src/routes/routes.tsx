@@ -25,6 +25,7 @@ import { EditDepartmentPage, ListDepartmentsPage } from '@/domains/department/pa
 import { ErrorPage, NotFound } from '@/components/errors';
 import { MainLayout } from '@/components/layout';
 import { RoleAndPermission } from '@/domains/role-and-permission/pages';
+import { CertificatesPage } from '@/domains/certificate/pages';
 
 export const routes = [
   {
@@ -69,6 +70,7 @@ export const routes = [
       { path: 'students/add', element: <AddStudent /> },
       { path: 'students/:id', element: <ViewStudent /> },
       { path: 'students/edit/:id', element: <EditStudent /> },
+      { path: 'certificates', element: <CertificatesPage /> },
       { path: 'notices', element: <ListNotices /> },
       { path: 'notices/add', element: <AddNotice /> },
       { path: 'notices/:id', element: <ViewNotice /> },

@@ -5,8 +5,9 @@ import { useParams } from 'react-router-dom';
 import { TabPanel } from '@/components/tab-panel';
 import { PageContentHeader } from '@/components/page-content-header';
 import { StudentProfile } from '@/components/user-account-profile';
+import { StudentCertificatesPanel } from '@/domains/certificate/components';
 
-const tabs = ['Profile'];
+const tabs = ['Profile', 'Certificates'];
 export const ViewStudent = () => {
   const { id } = useParams();
   const [tab, setTab] = React.useState(0);
@@ -36,6 +37,9 @@ export const ViewStudent = () => {
         <Box sx={{ display: 'flex', flexGrow: 1 }}>
           <TabPanel value={tab} index={0}>
             <StudentProfile id={id} />
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            {id ? <StudentCertificatesPanel studentId={id} /> : null}
           </TabPanel>
         </Box>
       </Box>
