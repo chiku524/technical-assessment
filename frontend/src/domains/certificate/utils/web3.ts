@@ -1,17 +1,27 @@
-import { BrowserProvider, Contract, id as ethersId } from 'ethers';
+import {
+  BrowserProvider,
+  Contract,
+  Eip1193Provider,
+  id as ethersId
+} from 'ethers';
 import certificateAbi from '../abi/CertificateRegistry.json';
 
 const CONTRACT_ADDRESS = import.meta.env.VITE_CERTIFICATE_CONTRACT_ADDRESS as string | undefined;
+
+const getEthereumProvider = (): Eip1193Provider => {
+  const provider = window.ethereum as Eip1193Provider | undefined;
+  if (!provider) {
+    throw new Error('MetaMask (or another Web3 wallet) is required');
+  }
+  return provider;
+};
 
 export const isWalletAvailable = () =>
   typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 
 export const connectWallet = async (): Promise<string> => {
-  if (!isWalletAvailable()) {
-    throw new Error('MetaMask (or another Web3 wallet) is required');
-  }
-
-  const provider = new BrowserProvider(window.ethereum);
+  const ethereum = getEthereumProvider();
+  const provider = new BrowserProvider(ethereum);
   const accounts = await provider.send('eth_requestAccounts', []);
   if (!accounts?.length) {
     throw new Error('No wallet account found');
@@ -23,11 +33,9 @@ export const getCertificateContract = async (withSigner = false) => {
   if (!CONTRACT_ADDRESS) {
     throw new Error('VITE_CERTIFICATE_CONTRACT_ADDRESS is not configured');
   }
-  if (!isWalletAvailable()) {
-    throw new Error('Web3 wallet not available');
-  }
 
-  const provider = new BrowserProvider(window.ethereum);
+  const ethereum = getEthereumProvider();
+  const provider = new BrowserProvider(ethereum);
   if (withSigner) {
     const signer = await provider.getSigner();
     return new Contract(CONTRACT_ADDRESS, certificateAbi, signer);
@@ -66,7 +74,7 @@ export const issueOnChainCertificate = async ({
     }
   }
 
-  const signer = await new BrowserProvider(window.ethereum).getSigner();
+  const signer = await new BrowserProvider(getEthereumProvider()).getSigner();
   return {
     onChainId,
     txHash: receipt.hash as string,
@@ -91,10 +99,7 @@ export const verifyOnChainCertificate = async (certificateId: string) => {
 
 declare global {
   interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [key: string]: any;
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ethereum?: Eip1193Provider & Record<string, any>;
   }
 }
