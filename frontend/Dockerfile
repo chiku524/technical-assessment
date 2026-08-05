@@ -20,4 +20,5 @@ COPY --from=builder /app/tsconfig*.json ./
 COPY --from=builder /app/index.html ./index.html
 
 EXPOSE 5173
+ENV DOCKER=true
 CMD ["npx", "vite", "preview", "--host", "0.0.0.0", "--port", "5173"]

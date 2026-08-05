@@ -14,7 +14,14 @@ export default ({ mode }: { mode: string }) => {
       }
     },
     server: {
-      open: '/app'
+      host: true,
+      port: 5173,
+      open: process.env.DOCKER !== 'true' && process.env.CI !== 'true' ? '/app' : false
+    },
+    preview: {
+      host: true,
+      port: 5173,
+      open: false
     }
   });
 };
